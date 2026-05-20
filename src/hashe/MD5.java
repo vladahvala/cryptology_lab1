@@ -1,0 +1,40 @@
+package hashe;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class MD5 {
+
+    public static void main(String[] args) {
+        String input = "Hello, World!";
+        String hash = generateMD5(input);
+
+        System.out.println("Input: " + input);
+        System.out.println("MD5 Hash: " + hash);
+    }
+
+    public static String generateMD5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            byte[] digest = md.digest(input.getBytes());
+
+            StringBuilder hex = new StringBuilder();
+
+            for (byte b : digest) {
+                String h = Integer.toHexString(b & 0xff);
+
+                if (h.length() == 1) {
+                    hex.append('0');
+                }
+
+                hex.append(h);
+            }
+
+            return hex.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("MD5 algorithm not found", e);
+        }
+    }
+}
